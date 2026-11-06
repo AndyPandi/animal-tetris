@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f5ec">
+<meta name="description" content="동물 친구들과 천천히 즐기는 어린이용 블록 게임. 인터넷 연결 없이도 놀 수 있어요.">
+<title>동물친구 블록놀이터</title>
+<style>
+:root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--ink:#294b3d;--muted:#718274;--green:#3e7557;--paper:#f6f5ec;--line:#e1e6d8;--cell:34px;--cat:#f5cf93;--dog:#c7dfbd;--rabbit:#efc9d4;--giraffe:#f3df97;--bear:#cec9e7}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-rounded,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}button{font:inherit;cursor:pointer;color:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:focus-visible{outline:3px solid #d1883b;outline-offset:4px}button:disabled{cursor:default;opacity:.45}button:hover:not(:disabled){filter:brightness(.97)}button:active:not(:disabled){transform:translateY(2px)}svg{display:block;width:100%;height:100%}[hidden]{display:none!important}.symbols{position:absolute;width:0;height:0;overflow:hidden}.wrap{max-width:1100px;margin:auto;padding:0 34px}
+header{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px;font-size:17px;font-weight:800}.brand-icon{width:39px;height:39px;background:#dce7d1;border-radius:13px;padding:5px;transform:rotate(-7deg)}.header-note{font-size:12px;letter-spacing:1.5px;color:var(--muted)}.hero{text-align:center;padding:17px 0 15px;position:relative}.eyebrow{font-size:11px;letter-spacing:2px;font-weight:800;color:#77906c}.hero h1{font-size:clamp(29px,4vw,36px);letter-spacing:-1.8px;margin:9px 0 10px;font-weight:900}.hero h1 span{color:#67936c}.hero p{margin:0;font-size:14px;color:var(--muted)}.sprig{position:absolute;left:14%;top:45px;font-size:40px;color:#9ab18c;transform:rotate(-22deg)}.spark{position:absolute;right:16%;top:50px;font-size:38px;color:#d7b96c}
+.playground{display:grid;grid-template-columns:210px minmax(280px,360px) 210px;gap:28px;justify-content:center;align-items:start}.sidebar{display:flex;flex-direction:column;gap:16px;padding-top:10px}.card{border:1px solid var(--line);border-radius:22px;background:#fffef9;padding:22px}.card h2{font-size:14px;margin:0 0 16px}.card .caption{color:var(--muted);font-size:12px;line-height:1.7;margin:9px 0 0}.score-line{display:flex;align-items:center;justify-content:space-between;margin-top:13px;font-size:13px}.score-line strong{font-size:27px;letter-spacing:-1px}.score-line .unit{font-size:12px;font-weight:500;margin-left:3px}.progress{border-top:1px dashed #d8dfd2;margin-top:16px;padding-top:16px}.stars{display:flex;justify-content:space-between;gap:4px;font-size:21px;color:#dfe3d6}.stars .earned{color:#ca9835}.next-card{text-align:center}.next-card h2{text-align:left}.next-grid{display:grid;gap:3px;justify-content:center;min-height:76px;align-content:center}.next-cell{width:32px;height:32px;border-radius:8px;padding:1px}.next-name{font-size:12px;margin-top:11px;color:var(--muted)}.pill{background:#edf2e6;color:#547751;border-radius:20px;padding:7px 12px;font-size:12px;display:inline-flex;gap:6px;align-items:center}.pill i{width:6px;height:6px;background:#7ea16c;border-radius:50%}.welcome-note{padding:4px 12px;font-size:12px;line-height:1.9;color:var(--muted)}
+.game-center{min-width:0}.board-top{display:flex;align-items:center;justify-content:space-between;padding:0 4px 12px;font-size:12px;font-weight:700}.board-top .sound{border:0;background:none;padding:8px;color:#6c7c6d;font-size:12px;min-height:36px}.board-shell{position:relative;border:8px solid #d3ddc9;border-radius:22px;background:#e9eee2;box-shadow:0 9px 0 #c2cdb6,0 16px 32px #34492c0a;padding:7px;overflow:hidden}.board{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));grid-template-rows:repeat(20,minmax(0,1fr));gap:3px;aspect-ratio:10/20;isolation:isolate}.cell{border-radius:7px;background:#f7f9f1;min-width:0;min-height:0;border:1px solid #e2e9db;position:relative;overflow:hidden}.cell.filled{border-color:#0000000b;box-shadow:inset 0 -3px 0 #0000000b;padding:1px}.cell.active{box-shadow:inset 0 -3px 0 #00000012;outline:1px solid #ffffffa6;outline-offset:-3px}.cell.ghost{background:#dce7d2;border:2px dashed #8ea67b;box-shadow:none}.cell.ghost:after{content:"";width:5px;height:5px;background:#91a982;border-radius:50%;position:absolute;left:calc(50% - 2.5px);top:calc(50% - 2.5px)}
+.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#f4f7edcf;backdrop-filter:blur(4px);z-index:5;padding:19px}.overlay-content{text-align:center;width:100%}.mascot{height:89px;width:89px;margin:0 auto 16px;background:#f1d89f;border-radius:28px;transform:rotate(-8deg);padding:5px;box-shadow:0 7px 0 #e9c680}.overlay h2{font-size:25px;letter-spacing:-1px;margin:0 0 10px}.overlay p{font-size:13px;line-height:1.85;color:#657960;margin:0 0 20px;white-space:pre-line}.primary{border:0;border-radius:15px;padding:16px 24px;background:var(--green);color:white;font-size:16px;font-weight:800;box-shadow:0 4px 0 #2d5940;min-height:54px}.secondary{display:block;margin:17px auto 0;border:0;background:transparent;color:#61765f;text-decoration:underline;text-underline-offset:4px;padding:7px;font-size:13px}.toast{height:38px;text-align:center;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:12px;color:#57734b}.controls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.control{border:1px solid #dce2d3;background:#fffef9;border-radius:15px;padding:8px 0;box-shadow:0 4px 0 #e1e5d9;user-select:none;min-height:62px}.control b{display:block;font-size:24px;line-height:27px}.control span{display:block;font-size:11px;font-weight:700;margin-top:3px}.control.rotate{background:#e3ecda}.drop{width:100%;margin-top:12px;border:1px solid #e2d4b2;background:#f4e9ce;border-radius:13px;min-height:44px;font-size:12px;font-weight:700;box-shadow:0 3px 0 #e5dabb}.bottom-actions{display:flex;justify-content:center;gap:22px;margin-top:17px}.quiet{border:0;background:none;font-size:12px;color:#71806d;min-height:36px;padding:5px}.hint-step{display:flex;gap:10px;margin-top:17px}.step-number{flex:0 0 24px;height:24px;display:grid;place-items:center;background:#edf1e6;border-radius:8px;font-size:12px;font-weight:800}.hint-step p{margin:1px 0 0;font-size:12px;line-height:1.7;color:#71806c}.hint-step strong{color:#3b5745;font-size:13px;display:block}.keys{margin-top:21px;padding-top:17px;border-top:1px dashed #dae2d2;font-size:11px;line-height:2.2;color:var(--muted)}kbd{font:inherit;display:inline-block;border:1px solid #dce2d3;border-bottom-width:2px;border-radius:5px;padding:0 5px;background:white;color:#536a4b}.friends{background:#eaf0df;border:0}.friends-list{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}.friend{width:44px;height:44px;border-radius:14px;padding:4px}.friends .caption{text-align:center}.footer{display:flex;justify-content:space-between;align-items:center;margin-top:33px;border-top:1px solid var(--line);padding:20px 0 24px;color:#8a9480;font-size:11px}.footer span:first-child{letter-spacing:1px}.confetti{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:hidden}.confetti i{position:absolute;top:-20px;left:var(--x);font-style:normal;color:var(--c);font-size:19px;animation:fall 1.7s ease-in forwards;animation-delay:var(--delay)}@keyframes fall{to{transform:translateY(650px) rotate(300deg);opacity:0}}@keyframes glow{50%{box-shadow:0 9px 0 #c2cdb6,0 0 30px #e6bd48}}.celebrate{animation:glow .65s ease 2}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media(min-width:900px) and (max-height:900px){.hero{padding:10px 0}.playground{grid-template-columns:210px 300px 210px;gap:30px}.wrap{max-width:1030px}header{height:54px}.footer{margin-top:22px}.control{min-height:55px;padding:5px 0}.toast{height:27px}}
+@media(max-width:800px){.wrap{padding:0 18px}.playground{grid-template-columns:minmax(260px,340px) 190px;gap:20px}.left-sidebar{grid-column:2;grid-row:1}.right-sidebar{grid-column:2;grid-row:1;margin-top:355px}.right-sidebar .howto{display:none}.game-center{grid-column:1;grid-row:1}.hero{padding:24px 0}.sprig{left:5%}.spark{right:7%}.header-note{font-size:10px}}
+/* Touch-first phone layout: the board takes all space left above the controls. */
+.input-deck{min-width:0;margin-top:12px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.input-deck .controls{display:contents}.input-deck .drop{margin:0;padding:6px 2px;min-height:62px;font-size:11px}.input-deck .drop b{display:block;font-size:24px;line-height:27px}.input-deck .drop span{display:block;font-weight:700;margin-top:3px}.toast{position:absolute;top:9px;left:8px;right:8px;z-index:6;height:auto;margin:0;padding:8px;border-radius:10px;background:#fffef9ed;pointer-events:none;line-height:1.45}.toast:empty{display:none}.touch-hint{display:none}.quiet b{font-weight:500}.board{touch-action:none;user-select:none;-webkit-user-select:none}.board-shell{touch-action:none}.board:focus{outline:none}.board:focus-visible{outline:2px solid #90a77d;outline-offset:3px}
+@media(max-width:600px){
+ html,body{height:100%;overscroll-behavior-y:none}
+ .wrap{position:relative;width:100%;max-width:480px;height:100vh;height:100dvh;padding:var(--safe-top) max(12px,env(safe-area-inset-right,0px)) max(10px,var(--safe-bottom)) max(12px,env(safe-area-inset-left,0px));display:flex;flex-direction:column}
+ header,.footer,.eyebrow,.hero p,.sprig,.spark,.right-sidebar,.welcome-note{display:none}
+ main{flex:1;min-height:0;display:flex;flex-direction:column}
+ .hero{flex:0 0 44px;padding:0;display:flex;align-items:center;text-align:left}
+ .hero h1{font-size:19px;letter-spacing:-1px;margin:0;padding-right:142px;white-space:nowrap}
+ .playground{flex:1;min-height:0;align-items:stretch;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:40px minmax(0,1fr);gap:4px}
+ .left-sidebar{grid-column:1;grid-row:1;display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:8px;width:100%;padding:0;min-height:0}
+ .card{border-radius:12px;padding:2px 9px;min-width:0}
+ .score-card h2,.score-card .progress,.next-name{display:none}
+ .score-card{display:flex;align-items:center;justify-content:space-around;gap:10px}
+ .score-line{margin:0;display:flex;align-items:center;gap:6px;font-size:10px;text-align:center;line-height:1.35}
+ .score-line strong{display:block;font-size:20px;margin:0;line-height:1.1}
+ .score-line .unit{font-size:10px}
+ .next-card{display:flex;align-items:center;gap:5px;justify-content:space-between}
+ .next-card h2{font-size:10px;margin:0;white-space:normal;width:26px;flex-shrink:0;line-height:1.3}
+ .next-grid{min-height:0;gap:1px;flex-shrink:0}
+ .next-cell{width:12px;height:12px;border-radius:4px;padding:0}
+ .game-center{grid-column:1;grid-row:2;width:100%;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) 64px;gap:8px}
+ .board-top{display:contents}.board-top .pill,.touch-hint{display:none!important}
+ .pill{font-size:10px;padding:5px 8px;gap:4px;white-space:nowrap}
+ .touch-hint{display:inline;font-size:10px;font-weight:500;color:#7a8d71;white-space:nowrap}
+ .board-top .sound{position:absolute;top:var(--safe-top);right:max(106px,calc(env(safe-area-inset-right,0px) + 94px));width:44px;height:44px;min-width:44px;min-height:44px;padding:0;border-radius:12px;background:#eaf0e1;color:#54714b;font-size:0}.board-top .sound:before{content:"♪";display:block;font-size:19px;line-height:20px}.board-top .sound:after{content:"소리 꺼짐";display:block;font-size:8px}.board-top .sound[aria-pressed="true"]:after{content:"소리 켜짐"}
+ .board-shell{height:100%;min-height:0;min-width:0;width:auto;max-width:100%;aspect-ratio:10/20;margin:0 auto;border-width:6px;padding:4px;border-radius:18px;box-shadow:0 4px 0 #c2cdb6}
+ .board{height:100%;width:100%;aspect-ratio:auto;gap:2px}.cell{border-radius:5px}
+ .toast{font-size:11px;min-height:0}
+ .input-deck{display:grid;margin-top:0;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:64px;gap:6px}
+ .controls{display:contents}
+ .control,.input-deck .drop{min-width:0;min-height:0;width:100%;height:100%;padding:5px 1px;border-radius:16px;box-shadow:0 4px 0 #dde3d5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+ .control b,.input-deck .drop b{font-size:27px;line-height:28px}.control span,.input-deck .drop span{font-size:11px;margin:0;white-space:nowrap}
+ .control.rotate{background:#cfe2bf;border-color:#bfd3b0;box-shadow:0 4px 0 #b3ca9f}
+ .input-deck .drop{margin:0;background:#f2dfad;border-color:#e1ce9d;box-shadow:0 4px 0 #ddca99}
+ .bottom-actions{position:absolute;right:max(12px,env(safe-area-inset-right,0px));top:var(--safe-top);height:44px;margin:0;gap:3px;align-items:center}
+ .quiet{border-radius:12px;width:44px;height:44px;min-height:44px;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#eaf0e1;color:#54714b;gap:1px}
+ .quiet b{font-size:19px;line-height:20px}.quiet span{font-size:9px}
+ .overlay{padding:10px;backdrop-filter:blur(3px)}.overlay h2{font-size:21px;margin-bottom:7px;letter-spacing:-1px}
+ .mascot{width:64px;height:64px;margin:0 auto 13px;border-radius:21px}
+ .overlay p{font-size:12px;line-height:1.65;margin-bottom:14px}.primary{font-size:15px;min-height:48px;padding:12px 19px}.secondary{font-size:12px;margin-top:10px;min-height:44px;padding:9px}
+}
+@media(max-width:600px) and (max-height:700px){
+ .hero{flex-basis:44px}.hero h1{font-size:17px}.playground{grid-template-rows:38px minmax(0,1fr)}
+ .game-center{grid-template-rows:minmax(0,1fr) 60px;gap:7px}.input-deck{grid-template-rows:60px}
+ .overlay h2{font-size:17px}.mascot{width:43px;height:43px;margin-bottom:8px;border-radius:14px}.overlay p{font-size:11px;line-height:1.45;margin-bottom:9px}.primary{font-size:13px;padding:10px 12px;min-height:44px}.overlay .secondary{margin-top:4px}
+}
+@media(max-width:360px){.hero h1{font-size:14px;letter-spacing:-1.2px}.left-sidebar{grid-template-columns:minmax(0,1fr) 112px}.next-card{padding:2px 7px}.touch-hint{font-size:9px}.pill{padding:5px}.control span,.input-deck .drop span{font-size:10px}.score-line{gap:3px;font-size:9px}.score-line strong{font-size:18px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.confetti{display:none}}
+</style>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="동물블록">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<script defer src="./pwa.js"></script>
+</head>
+<body>
+<svg class="symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+<g id="face"><circle cx="24" cy="34" r="2.3" fill="#534736"/><circle cx="40" cy="34" r="2.3" fill="#534736"/><path d="M29 40 Q32 43 35 40 M32 39V42" fill="none" stroke="#725342" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="18" cy="40" rx="4" ry="2.5" fill="#e7a591" opacity=".65"/><ellipse cx="46" cy="40" rx="4" ry="2.5" fill="#e7a591" opacity=".65"/></g>
+<symbol id="cat" viewBox="0 0 64 64"><path d="M12 29L11 9 26 19Q32 17 38 19L53 9 52 30" fill="#d99551"/><path d="M15 23L15 15 23 21M41 21L49 15 49 24" fill="#eeb6a2"/><rect x="10" y="20" width="44" height="34" rx="17" fill="#f7e4b7"/><path d="M28 21L30 28M36 21L34 28" stroke="#d99551" stroke-width="3" stroke-linecap="round"/><use href="#face"/><path d="M13 37L5 35M13 41L5 43M51 37L59 35M51 41L59 43" stroke="#a98556" stroke-width="1.5" stroke-linecap="round"/></symbol>
+<symbol id="dog" viewBox="0 0 64 64"><ellipse cx="15" cy="29" rx="10" ry="17" fill="#997456" transform="rotate(15 15 29)"/><ellipse cx="49" cy="29" rx="10" ry="17" fill="#997456" transform="rotate(-15 49 29)"/><rect x="14" y="16" width="36" height="39" rx="16" fill="#f6e6c9"/><ellipse cx="24" cy="31" rx="8" ry="10" fill="#d1ad80"/><use href="#face"/><ellipse cx="32" cy="39" rx="4" ry="3" fill="#76553e"/><path d="M29 44Q32 47 35 44V48Q32 53 29 48Z" fill="#d78f8e"/></symbol>
+<symbol id="rabbit" viewBox="0 0 64 64"><ellipse cx="22" cy="17" rx="7" ry="15" fill="#fff5ed" transform="rotate(-12 22 17)"/><ellipse cx="42" cy="17" rx="7" ry="15" fill="#fff5ed" transform="rotate(12 42 17)"/><ellipse cx="22" cy="16" rx="3" ry="10" fill="#eebac7" transform="rotate(-12 22 16)"/><ellipse cx="42" cy="16" rx="3" ry="10" fill="#eebac7" transform="rotate(12 42 16)"/><rect x="12" y="23" width="40" height="33" rx="17" fill="#fff5ed"/><use href="#face"/><ellipse cx="32" cy="39" rx="3" ry="2" fill="#c6909e"/></symbol>
+<symbol id="giraffe" viewBox="0 0 64 64"><path d="M24 22L22 9M40 22L42 9" stroke="#ba8548" stroke-width="4"/><circle cx="22" cy="8" r="4" fill="#a97743"/><circle cx="42" cy="8" r="4" fill="#a97743"/><ellipse cx="13" cy="23" rx="10" ry="5" fill="#e9b356" transform="rotate(30 13 23)"/><ellipse cx="51" cy="23" rx="10" ry="5" fill="#e9b356" transform="rotate(-30 51 23)"/><rect x="16" y="17" width="32" height="39" rx="13" fill="#f8d582"/><path d="M17 26L23 23 23 18M39 18L39 24 46 26" fill="#c69554"/><ellipse cx="32" cy="46" rx="16" ry="10" fill="#f9e6b8"/><use href="#face"/></symbol>
+<symbol id="bear" viewBox="0 0 64 64"><circle cx="16" cy="19" r="10" fill="#ad8261"/><circle cx="48" cy="19" r="10" fill="#ad8261"/><circle cx="16" cy="19" r="5" fill="#e5c4a4"/><circle cx="48" cy="19" r="5" fill="#e5c4a4"/><rect x="10" y="18" width="44" height="37" rx="18" fill="#cda47b"/><ellipse cx="32" cy="43" rx="11" ry="9" fill="#f6e6c9"/><use href="#face"/><ellipse cx="32" cy="39" rx="4" ry="3" fill="#73503c"/></symbol>
+</defs></svg>
+<div class="wrap">
+<header><div class="brand"><span class="brand-icon"><svg aria-hidden="true"><use href="#bear"/></svg></span>작은 숲 놀이터</div><span class="header-note">LITTLE FOREST · PLAY & GROW</span></header>
+<main>
+<section class="hero"><span class="sprig" aria-hidden="true">❧</span><div class="eyebrow">HELLO, LITTLE FRIENDS!</div><h1>동물친구 <span>블록놀이터</span></h1><p>차곡차곡, 동물 친구들과 한 줄을 채워 봐요.</p><span class="spark" aria-hidden="true">✳</span></section>
+<div class="playground">
+<aside class="sidebar left-sidebar" aria-label="게임 기록과 다음 블록">
+<section class="card score-card"><h2>나의 작은 기록</h2><div class="score-line">모은 점수<strong id="score">0</strong></div><div class="score-line">완성한 줄<strong><span id="lines">0</span><span class="unit">줄</span></strong></div><div class="progress"><div id="stars" class="stars" aria-label="별 0개">★ ★ ★ ★ ★</div><p class="caption" id="star-caption">한 줄마다 별 하나!<br>별 다섯 개를 모아 봐요.</p></div></section>
+<section class="card next-card"><h2>다음 친구</h2><div id="next" class="next-grid" role="img" aria-label="다음 블록"></div><div id="next-name" class="next-name"></div></section>
+<div class="welcome-note">잘하지 않아도 괜찮아.<br>우리 천천히 놀자! <span aria-hidden="true">☘</span></div>
+</aside>
+<section class="game-center" aria-label="동물 블록 게임">
+<div class="board-top"><span class="pill"><i></i>천천히 모드</span><span class="touch-hint">쓸어 옮기기 · 톡! 돌리기</span><button id="sound" class="sound" aria-pressed="false">♪ 소리 꺼짐</button></div>
+<div class="board-shell" id="board-shell"><div class="board" id="board" tabindex="0" role="img" aria-label="10칸 너비, 20칸 높이 블록 놀이판"></div><div class="confetti" id="confetti" aria-hidden="true"></div><div id="message" class="toast" role="status" aria-live="polite"></div>
+<div class="overlay" id="overlay"><div class="overlay-content"><div class="mascot"><svg aria-hidden="true"><use href="#cat"/></svg></div><h2 id="overlay-title">같이 놀 준비 됐나요?</h2><p id="overlay-text">동물 블록을 옮겨서\n빈틈없이 한 줄을 채워 봐요!</p><button id="main-action" class="primary">▶ 놀이 시작</button><button id="cancel-action" class="secondary" hidden>계속 놀래요</button></div></div></div>
+<div class="input-deck"><div class="controls" aria-label="게임 조작"><button class="control" data-action="left" aria-label="왼쪽으로 이동"><b aria-hidden="true">←</b><span>왼쪽</span></button><button class="control rotate" data-action="rotate" aria-label="블록 돌리기"><b aria-hidden="true">↻</b><span>돌리기</span></button><button class="control" data-action="right" aria-label="오른쪽으로 이동"><b aria-hidden="true">→</b><span>오른쪽</span></button><button class="control" data-action="down" aria-label="한 칸 내리기"><b aria-hidden="true">↓</b><span>한 칸 아래</span></button></div>
+<button class="drop" data-action="drop" aria-label="블록 바로 놓기"><b aria-hidden="true">⇓</b><span>바로 놓기</span></button></div>
+<div class="bottom-actions"><button id="pause" class="quiet" aria-label="잠깐 쉬기"><b aria-hidden="true">Ⅱ</b> <span>쉬기</span></button><button id="restart" class="quiet" aria-label="처음부터 다시 시작"><b aria-hidden="true">↺</b> <span>처음부터</span></button></div>
+</section>
+<aside class="sidebar right-sidebar"><section class="card howto"><h2>이렇게 놀아요</h2><div class="hint-step"><span class="step-number">1</span><p><strong>친구를 옮겨요</strong>왼쪽, 오른쪽으로<br>자리를 찾아 주세요.</p></div><div class="hint-step"><span class="step-number">2</span><p><strong>빙글! 돌려 봐요</strong>블록을 돌리면<br>쏙 맞는 자리가 보여요.</p></div><div class="hint-step"><span class="step-number">3</span><p><strong>한 줄이면 성공!</strong>빈칸 없이 채우면<br>별이 반짝! 줄이 사라져요.</p></div><div class="keys"><kbd>←</kbd> <kbd>→</kbd> 옮기기 · <kbd>↑</kbd> 돌리기<br><kbd>↓</kbd> 내리기 · <kbd>Space</kbd> 놓기<br><kbd>P</kbd> 잠깐 쉬기</div></section><section class="card friends"><h2>오늘의 숲속 친구들</h2><div class="friends-list" id="friends"></div><p class="caption">고양이 · 강아지 · 토끼<br>기린 · 곰이 기다리고 있어요.</p></section></aside>
+</div>
+</main><footer class="footer"><span>MADE FOR LITTLE HAPPY MOMENTS</span><span>작은 손으로 만드는 큰 즐거움</span></footer>
+</div>
+<script id="game-core">
+'use strict';
+class AnimalGame {
+ constructor(random=Math.random){this.random=random;this.width=10;this.height=20;this.reset();}
+ makePiece(){
+  // Standard tetrominoes: I, O, T, S, Z, J, L. Every piece has four cells.
+  const shapes=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[0,1,1],[1,1,0]],[[1,1,0],[0,1,1]],[[1,0,0],[1,1,1]],[[0,0,1],[1,1,1]]];
+  const shape=shapes[Math.floor(this.random()*shapes.length)].map(r=>r.slice());
+  return {shape,animal:Math.floor(this.random()*5),x:0,y:0};
+ }
+ reset(){this.board=Array.from({length:this.height},()=>Array(this.width).fill(null));this.score=0;this.lines=0;this.over=false;this.next=this.makePiece();this.spawn();}
+ spawn(){this.current=this.next;this.current.x=Math.floor((this.width-this.current.shape[0].length)/2);this.current.y=0;this.next=this.makePiece();if(!this.fits(this.current))this.over=true;}
+ fits(p){return p.shape.every((row,dy)=>row.every((v,dx)=>!v||(p.x+dx>=0&&p.x+dx<this.width&&p.y+dy>=0&&p.y+dy<this.height&&this.board[p.y+dy][p.x+dx]===null)));}
+ move(dx,dy){if(this.over)return false;const p={...this.current,x:this.current.x+dx,y:this.current.y+dy};if(!this.fits(p))return false;this.current=p;return true;}
+ rotate(){if(this.over)return false;const s=this.current.shape;const shape=s[0].map((_,x)=>s.map(row=>row[x]).reverse());for(const kick of [0,-1,1,-2,2,-3,3]){const p={...this.current,shape,x:this.current.x+kick};if(this.fits(p)){this.current=p;return true;}}return false;}
+ landingY(){const p={...this.current};while(this.fits({...p,y:p.y+1}))p.y++;return p.y;}
+ step(){if(this.over)return {cleared:0};return {cleared:0,moved:this.move(0,1)};}
+ drop(){if(this.over)return {cleared:0};this.current.y=this.landingY();return this.lock();}
+ lock(){if(this.over)return {cleared:0};const p=this.current;p.shape.forEach((r,dy)=>r.forEach((v,dx)=>{if(v)this.board[p.y+dy][p.x+dx]=p.animal;}));const remaining=this.board.filter(r=>r.some(v=>v===null));const cleared=this.height-remaining.length;this.board=[...Array.from({length:cleared},()=>Array(this.width).fill(null)),...remaining];this.lines+=cleared;this.score+=10+cleared*100;this.spawn();return {cleared};}
+}
+globalThis.AnimalGame=AnimalGame;
+</script>
+<script>
+'use strict';
+(()=>{
+ const $=id=>document.getElementById(id);
+ const animals=[{id:'cat',name:'고양이'},{id:'dog',name:'강아지'},{id:'rabbit',name:'토끼'},{id:'giraffe',name:'기린'},{id:'bear',name:'곰'}];
+ const svg=a=>`<svg viewBox="0 0 64 64" aria-hidden="true"><use href="#${a.id}"/></svg>`;
+ const game=new AnimalGame();let mode='ready',lockTimer=null,timer=null,sound=false,audio=null,confettiTimer=null,confirmPrevious='playing',gesture=null;
+ const cells=Array.from({length:game.width*game.height},()=>{const c=document.createElement('div');c.className='cell';$('board').append(c);return c;});
+ animals.forEach(a=>{const el=document.createElement('div');el.className='friend';el.style.background=`var(--${a.id})`;el.innerHTML=svg(a);el.title=a.name;$('friends').append(el);});
+ function paint(cell,animal,kind='filled'){cell.className=`cell ${kind}`;cell.style.background=kind==='ghost'?'':`var(--${animals[animal].id})`;cell.innerHTML=kind==='ghost'?'':svg(animals[animal]);}
+ function render(){
+  cells.forEach((c,i)=>{c.className='cell';c.style.background='';c.innerHTML='';const a=game.board[Math.floor(i/game.width)][i%game.width];if(a!==null)paint(c,a);});
+  if(!game.over){const p=game.current;const gy=game.landingY();p.shape.forEach((r,dy)=>r.forEach((v,dx)=>{if(v&&gy>p.y)paint(cells[(gy+dy)*game.width+p.x+dx],p.animal,'ghost');}));p.shape.forEach((r,dy)=>r.forEach((v,dx)=>{if(v)paint(cells[(p.y+dy)*game.width+p.x+dx],p.animal,'filled active');}));}
+  $('score').textContent=game.score;$('lines').textContent=game.lines;
+  const stars=game.lines%5;$('stars').innerHTML=Array.from({length:5},(_,i)=>`<span class="${i<stars?'earned':''}">★</span>`).join('');$('stars').setAttribute('aria-label',`이번 별 ${stars}개, 완성한 별 다섯 개 묶음 ${Math.floor(game.lines/5)}개`);
+  $('star-caption').textContent=game.lines>=5?`별 다섯 개를 ${Math.floor(game.lines/5)}번 모았어요!`:'한 줄마다 별 하나! 다섯 개를 모아 봐요.';
+  const next=game.next;$('next').style.gridTemplateColumns=`repeat(${next.shape[0].length},auto)`;$('next').innerHTML=next.shape.flat().map(v=>`<div class="next-cell" style="${v?`background:var(--${animals[next.animal].id})`:''}">${v?svg(animals[next.animal]):''}</div>`).join('');$('next-name').textContent=animals[next.animal].name+' 친구가 오고 있어요';$('next').setAttribute('aria-label',`다음 친구 ${animals[next.animal].name}, ${next.shape.flat().filter(Boolean).length}칸 블록`);
+  document.querySelectorAll('[data-action]').forEach(b=>b.disabled=mode!=='playing');$('pause').disabled=mode!=='playing';$('restart').disabled=mode==='ready'||mode==='confirm';
+ }
+ function stopTimer(){clearInterval(timer);timer=null;clearTimeout(lockTimer);lockTimer=null;}
+ function syncLockTimer(reset=false){
+  const grounded=!game.over&&!game.fits({...game.current,y:game.current.y+1});
+  if(mode!=='playing'||gesture||!grounded){clearTimeout(lockTimer);lockTimer=null;return;}
+  if(reset){clearTimeout(lockTimer);lockTimer=null;}
+  if(lockTimer===null){
+   lockTimer=setTimeout(()=>{lockTimer=null;act('lock');},2000);
+  }
+ }
+ function startTimer(){stopTimer();timer=setInterval(()=>act('tick'),2500);syncLockTimer();}
+ function showOverlay(title,description,label){$('overlay-title').textContent=title;$('overlay-text').textContent=description;$('main-action').textContent=label;$('cancel-action').hidden=mode!=='confirm';$('overlay').hidden=false;$('main-action').focus({preventScroll:true});render();}
+ function start(){stopTimer();game.reset();mode='playing';$('overlay').hidden=true;$('message').textContent='';$('confetti').replaceChildren();render();startTimer();$('board').focus({preventScroll:true});}
+ function pause(){gesture=null;if(mode!=='playing')return;mode='paused';stopTimer();showOverlay('잠깐 쉬어 가요','동물 친구들이 기다리고 있어요.\n준비되면 다시 놀아요!','▶ 이어서 놀기');}
+ function resume(){mode='playing';$('overlay').hidden=true;render();startTimer();$('board').focus({preventScroll:true});}
+ function tone(win=false){if(!sound)return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume().catch(()=>{});const notes=win?[523,659,784]:[440];notes.forEach((f,i)=>{const o=audio.createOscillator(),g=audio.createGain();o.connect(g);g.connect(audio.destination);o.type='sine';o.frequency.value=f;const t=audio.currentTime+i*.12;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.07,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.19);o.start(t);o.stop(t+.2);});}catch{sound=false;$('sound').textContent='♪ 소리 사용 불가';$('sound').setAttribute('aria-pressed','false');}}
+ function celebrate(count){$('message').textContent=`반짝! ${count}줄을 완성했어요. 정말 멋져요 ⭐`;tone(true);$('confetti').innerHTML=Array.from({length:20},(_,i)=>`<i style="--x:${(i*37)%100}%;--c:${['#d3a343','#80a66b','#d893a6'][i%3]};--delay:${(i%5)*.07}s">${i%2?'★':'●'}</i>`).join('');$('board-shell').classList.remove('celebrate');void $('board-shell').offsetWidth;$('board-shell').classList.add('celebrate');clearTimeout(confettiTimer);confettiTimer=setTimeout(()=>{$('confetti').replaceChildren();$('board-shell').classList.remove('celebrate');$('message').textContent='';},2300);}
+ function act(action){
+  if(mode!=='playing')return;let result,moved=false;
+  switch(action){
+   case'left':moved=game.move(-1,0);break;
+   case'right':moved=game.move(1,0);break;
+   case'rotate':moved=game.rotate();tone();break;
+   case'down':case'tick':result=game.step();moved=result.moved;break;
+   case'lock':if(!game.fits({...game.current,y:game.current.y+1}))result=game.lock();break;
+   case'drop':result=game.drop();tone();break;
+  }
+  if(result?.cleared)celebrate(result.cleared);
+  else if(action==='lock'||action==='drop')$('message').textContent='';
+  if(game.over){mode='over';stopTimer();showOverlay('참 잘 놀았어요! 🌷',`${game.lines}줄을 완성하고 ${game.score}점을 모았어요.\n새로운 놀이터에서 또 만나 볼까요?`,'↺ 한 번 더 놀기');}
+  else if(result&&action!=='tick')startTimer();
+  else syncLockTimer(moved);
+  render();
+ }
+ $('main-action').addEventListener('click',()=>{if(mode==='paused')resume();else start();});
+ $('cancel-action').addEventListener('click',()=>{if(confirmPrevious==='paused'){mode='playing';pause();}else if(confirmPrevious==='over'){mode='over';showOverlay('참 잘 놀았어요! 🌷',`${game.lines}줄을 완성하고 ${game.score}점을 모았어요.\n새로운 놀이터에서 또 만나 볼까요?`,'↺ 한 번 더 놀기');}else resume();});
+ $('pause').addEventListener('click',pause);$('restart').addEventListener('click',()=>{if(mode==='ready'||mode==='confirm')return;confirmPrevious=mode;mode='confirm';stopTimer();showOverlay('새로 시작할까요?','지금까지 쌓은 블록과 점수가 사라져요.\n새 놀이터에서 다시 놀 수 있어요.','↺ 새로 시작하기');});
+ $('sound').addEventListener('click',()=>{sound=!sound;$('sound').setAttribute('aria-pressed',String(sound));$('sound').textContent=sound?'♪ 소리 켜짐':'♪ 소리 꺼짐';if(sound)tone();});
+ document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>act(b.dataset.action)));
+ // One finger: horizontal travel moves cells; a short, still tap rotates.
+ // Vertical/long/cancelled/multitouch gestures never place a block.
+ const board=$('board');
+ const endGesture=()=>{gesture=null;if(mode==='playing')startTimer();};
+ board.addEventListener('pointerdown',e=>{
+  if(e.pointerType==='mouse'||mode!=='playing')return;
+  if(!e.isPrimary){endGesture();return;}
+  e.preventDefault();stopTimer();
+  gesture={id:e.pointerId,x:e.clientX,y:e.clientY,anchor:e.clientX,started:performance.now(),axis:null,moved:false,step:Math.max(26,board.getBoundingClientRect().width/game.width)};
+  board.setPointerCapture(e.pointerId);
+ });
+ board.addEventListener('pointermove',e=>{
+  const g=gesture;if(!g||g.id!==e.pointerId||mode!=='playing')return;
+  e.preventDefault();const dx=e.clientX-g.x,dy=e.clientY-g.y;
+  if(!g.axis&&Math.max(Math.abs(dx),Math.abs(dy))>=12)g.axis=Math.abs(dx)>Math.abs(dy)*1.2?'x':'y';
+  if(g.axis!=='x')return;
+  while(Math.abs(e.clientX-g.anchor)>=g.step){const direction=e.clientX>g.anchor?1:-1;act(direction>0?'right':'left');g.anchor+=direction*g.step;g.moved=true;}
+ });
+ board.addEventListener('pointerup',e=>{
+  const g=gesture;if(!g||g.id!==e.pointerId)return;
+  e.preventDefault();const tap=!g.axis&&!g.moved&&Math.hypot(e.clientX-g.x,e.clientY-g.y)<12&&performance.now()-g.started<400;
+  gesture=null;if(tap)act('rotate');if(mode==='playing')startTimer();
+ });
+ board.addEventListener('pointercancel',endGesture);
+ board.addEventListener('lostpointercapture',()=>{if(gesture)endGesture();});
+ board.addEventListener('contextmenu',e=>e.preventDefault());
+ document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;if(e.code==='KeyP'||e.code==='Escape'){e.preventDefault();if(e.repeat)return;if(mode==='playing')pause();else if(mode==='paused')resume();return;}
+  const action={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'rotate',ArrowDown:'down',Space:'drop'}[e.code];if(!action||mode!=='playing')return;
+  // Preserve Space activation on focused buttons; arrows always control the board.
+  if(e.code==='Space'&&e.target instanceof HTMLButtonElement)return;e.preventDefault();if(e.repeat&&['drop','rotate'].includes(action))return;act(action);
+ });
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});window.addEventListener('blur',pause);
+ $('overlay-text').textContent=matchMedia('(max-width:600px)').matches?'큰 버튼으로 옮기고, 빙글 돌려요.\n점선 자리에 놓아 한 줄을 채워요!':'동물 블록을 옮겨서\n빈틈없이 한 줄을 채워 봐요!';render();
+})();
+</script>
+</body>
+</html>
